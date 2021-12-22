@@ -1,0 +1,28 @@
+{
+  "name": "nodejs-skelton",
+  "version": "1.0.0",
+  "description": "truck tracking system",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/urdogan0000/nodejs-skelton.git"
+  },
+  "author": "Haydar Urdoğan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/urdogan0000/nodejs-skelton/issues"
+  },
+  "homepage": "https://github.com/urdogan0000/nodejs-skelton#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
