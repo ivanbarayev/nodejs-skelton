@@ -2,11 +2,15 @@ require('dotenv').config({ path: __dirname+'/.env' });
 global.express = require("express");
 global.app = express();
 const {rd_client} = require('./app/adapters/database/redis');
-const {pg_client} = require('./app/adapters/database/postgresql');
+//const {pg_client} = require('./app/adapters/database/postgresql');
 const {mongo_client} = require('./app/adapters/database/mongodb');
+const kafcli = require('./app/adapters/queue/kafka');
 const { router } = require('./app/routes/routes');
-//const swagger = require('./app/libs/swagger/autogen');
+const swagger = require('./app/libs/swagger/autogen');
 const expressSwagger = require('express-swagger-generator')(app);
+
+const jwt = require('jsonwebtoken');
+
 
 //Global Variable
 global.userIN = null;
@@ -26,8 +30,25 @@ app.get('/db', async (req, res) => {
     res.json({source: 'pg', data: data.rows, leo: req.body});
 });
 
-app.get("/ss", (req, res) => {
-    res.status(200).send("WHATABYTE: Food For Devs");
+app.post('/ll', async (req, res) => {
+    let parseddata = jwtparser(req.header.AUTH);
+    //const data = await pg_client.query("SELECT id,user_title,user_name,email,phone FROM users WHERE user_name='leo' AND user_pass='123'")
+    const data = await pg_client.query("INSERT INTO (school_name,created_by) VALUES ('ted koleji', "+parseddata.user_id+")")
+
+    let jwtdata = {
+        user_id : 5,
+        user_title : "Leon Romano",
+        user_name : "leon",
+        email : "leonromano@hotmail.com",
+        phone: "4473508546246"
+    }
+
+    // PARSE -> parcalama
+
+    const token = jwt.sign(jwtdata, process.env.SECRET_KEY)
+    //const token = jwt.sign(data.rows, process.env.SECRET_KEY)
+    //const token = jwt.sign({names:'leo'}, process.env.SECRET_KEY)
+    res.json({source: 'pg', data: "no data", leo: "no req body", token: token});
 });
 
 

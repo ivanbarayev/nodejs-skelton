@@ -21,4 +21,4 @@ db.createCollection('kisiler', (err, result) => {
     if (err) throw err;
     console.log('Koleksiyon oluşturuldu.');
     mongo_client.close();
-});*/
+});  */
